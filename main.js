@@ -714,7 +714,7 @@ function main(event) {
 
         // Notepad functionality
         function openNotepad(id) {
-            const notepad = document.getElementById("notepad-${id}");
+            const notepad = document.getElementById("notepad-" + id);
             if (notepad) {
                 notepad.style.display = 'block';
                 // Center the notepad
@@ -723,12 +723,12 @@ function main(event) {
                 notepad.style.top = '50%';
                 notepad.style.transform = 'translate(-50%, -50%)';
             } else {
-                alert("Notepad with ID "notepad-${id}" does not exist.");
+                alert("Notepad with ID " + "notepad-" + id + " does not exist.");
             }
         }
 
         function closeNotepad(id) {
-            const notepad = document.getElementById("notepad-${id}");
+            const notepad = document.getElementById("notepad-" + id);
             if (notepad) {
                 notepad.style.display = 'none';
             }
