@@ -699,7 +699,7 @@ function main(event) {
             // Update time
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
-            timeElement.textContent = '${hours}:${minutes}';
+            timeElement.textContent = hours + ':' + minutes;
             
             // Update date
             const options = { day: 'numeric', month: 'short', year: 'numeric' };
