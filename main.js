@@ -51,7 +51,7 @@ function main(event) {
 
         .desktop {
             height: 100%;
-            background-image: url('https://github.com/user-attachments/assets/e48db2cb-9400-4163-8fe1-3154fe8e38f9');
+            background-image: url('https://github.com/user-attachments/assets/0163863c-d27c-43a4-808e-c19694a21ba1');
             background-size: cover;
             background-position: center;
             position: relative;
