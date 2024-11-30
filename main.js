@@ -20,22 +20,741 @@ function main(event) {
   }
    
   return new Response(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Hello World</title>
-      <script>
-        ${htmx}
-      </script>
-    </head>
-    <body>
-      <h1>Hello World</h1>
-      <button hx-get="/messages" hx-target="#message">Load Message</button>
-      <p id="message"></p>
-    </body>
-    </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saumili Dutta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        window.onload = function() {
+            alert("For better view, open from PC or Laptop and click on F11 to watch this page on full screen mode");
+        };
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .desktop {
+            height: 100%;
+            background-image: url('https://github.com/user-attachments/assets/e48db2cb-9400-4163-8fe1-3154fe8e38f9');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+
+
+        /* Desktop Icons */
+        .desktop-icons {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .notepad-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: rgb(255, 1, 1);
+            text-align: center;
+        }
+
+        .notepad-icon img {
+            width: 50px;  /* Adjust size as needed */
+            height: 50px;
+            margin-bottom: 5px;
+        }
+
+        .notepad-icon span {
+            font-size: 10px;
+            word-wrap: break-word;
+            color: rgb(4, 0, 248);
+        }
+
+
+
+        /* Taskbar */
+        .taskbar {
+            height: 40px;
+            background: rgba(36, 36, 36, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .taskbar-center {
+            display:flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .taskbar-right {
+            color: white;
+            gap: 20px;
+            padding: 0 20px;
+            text-align: right;
+
+        }
+
+        .taskbar-right span {
+            font-size: 14px;
+        }
+
+        .taskbar button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .taskbar button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .taskbar-apps {
+            display: flex;
+            gap: 20px;
+        }
+
+        .fas, .fab, .far {
+            font-size: 30px; /* Adjust as needed */
+        }
+
+
+        /* Notepad Windows */
+        .notepad {
+            position: absolute;
+            display: none;
+            width: 500px;
+            height: 400px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .notepad-header {
+            padding: 10px;
+            background: #f0f0f0;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notepad-header button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .notepad-content {
+            padding: 20px;
+        }
+
+        .display-project{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .surround-project{
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;    /* Center align the image and text */
+            justify-content: center;
+            text-align: center;     /* Center align the text */
+            width: 100px;           /* Set width for the container */
+            height: 100px;
+            margin: 5px;      /* Center the div horizontally on the page */
+            padding: 10px;
+            border: 1px solid #ccc; /* Optional: Add a border */
+            border-radius: 8px;     /* Optional: Add rounded corners */
+            background-color: #f9f9f9; /* Optional: Add a background color */
+        }
+
+        info-contact{
+            display: flex;
+            padding-bottom: 5px;
+        }
+
+        .skills{
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Defines two equal-sized columns */
+        }
+
+
+
+        /* Search container */
+        .search-container {
+            position: relative;
+            display: flex; /* Use flexbox for horizontal alignment */
+            align-items: center; /* Center vertically */
+            width: 300px;
+            margin: 20px;
+        }
+
+        #search-box {
+            flex: 1; /* Allow search box to take available width */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px; /* Rounded corners only on the left */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        #search-submit {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 0 4px 4px 0; /* Rounded corners only on the right */
+            cursor: pointer;
+            background-color: white; /* Match the input field's background */
+            color: black;
+        }
+
+        #search-submit:hover {
+            background-color: #f0f0f0;
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
+
+
+        /* Video Player */
+        .video-icon img {
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .video-icon span {
+            font-size: 10px;
+            word-wrap: break-word;
+            color: rgb(4, 0, 248);
+        }
+
+        /* Video popup container */
+        .video-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+
+        /* Video player */
+        .video-popup video {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: red;
+            border: 1px solid red;
+            padding: 2px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+
+
+
+
+<body>
+    <!-- Desktop -->
+    <div class="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="notepad-icon" onclick="openNotepad('about')">
+                <img src="https://github.com/user-attachments/assets/d7b2494e-8f02-415a-8a6b-e5cd5942658b" alt="notepad icon">
+                <span>About Me</span>
+            </div>
+
+            <div class="notepad-icon" onclick="openNotepad('education')">
+                <img src="https://github.com/user-attachments/assets/ce4fd155-0713-4f77-842e-26fd6d343e5e" alt="notepad icon">
+                <span>Education</span>
+            </div>
+
+            <div class="notepad-icon" onclick="openNotepad('skills')">
+                <img src="https://github.com/user-attachments/assets/d03f048f-3079-4f25-a371-231a6615d6eb" alt="notepad icon">
+                <span>Skills</span>
+            </div>
+
+            <div class="notepad-icon" onclick="openNotepad('projects')">
+                <img src="https://github.com/user-attachments/assets/aa7e2060-d322-43bf-beb0-c4467c4b0bff" alt="notepad icon">
+                <span>Projects</span>
+            </div>
+
+            <div class="notepad-icon" onclick="openNotepad('communities')">
+                <img src="https://github.com/user-attachments/assets/b0c58873-c4ed-48c6-bd7f-3ef9770f96bd" alt="notepad icon">
+                <span>Communities</span>
+            </div>
+
+            <div class="notepad-icon" onclick="openNotepad('contact')">
+                <img src="https://github.com/user-attachments/assets/49d8f984-b3c1-42ec-8e3a-8a5d326f6610" alt="notepad icon">
+                <span>Contact</span>
+            </div>
+
+            <div class="video-icon" onclick="openVideo()">
+                <img src="https://github.com/user-attachments/assets/71683c65-3a5f-4176-9f2f-7fe2d501e7b3" alt="video icon">
+                <span>Watch Video</span>
+            </div>
+        </div>
+
+
+
+
+        <!-- Notepad Windows -->
+        <div class="notepad" id="notepad-about">
+            <div class="notepad-header">
+                <!-- About me -->
+                <span>About Me</span>
+                <button onclick="closeNotepad('about')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <p style="color: blue;">
+                    <strong>Hello!</strong> <br /><br />
+
+                    I'm <strong>Saumili Dutta</strong>, a <em>recent Software Development graduate from Asutosh College</em>. I've learned multiple programming languages, tackled challenges, and gained hands-on experience through various projects. My passion for continuous learning has led me to earn certifications in SQL, Microsoft Office, Communication Skills, Python, and API. I was also a mentee in Infosys Pragati.<br /><br />
+
+                    As an active member and leader in several communities, I’ve honed teamwork and communication skills. I also manage a Hashnode blog and a YouTube channel, handling everything from planning to publishing. I’m excited to collaborate with you!
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="notepad" id="notepad-education">
+            <div class="notepad-header">
+                <!-- Education -->
+                <span>Education</span>
+                <button onclick="closeNotepad('education')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <div>
+                    <h3> Graduation </h3>
+                    <a href="https://asutoshcollege.in/new-web/" target="_blank">Asutosh College, Kolkata</a><br />
+                    B.Voc in Software Development<br />
+                    CGPA: 8.99, Oct'21 - Jul'24<br /><br /><br />
+                </div>
+
+                <div>
+                    <h3> School </h3>
+                    <!-- 12th -->
+                    <a href="https://nghss.org/" target="_blank">National Gems Higher Secondary School, Kolkata</a><br />
+                    Biology in 10 + 2, class of 2019<br />
+                    Apr'19 - May'20<br /><br />
+
+                    <!-- 10th -->
+                    Economics in 10, class of 2017<br />
+                    Apr'17 - Mar'18
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="notepad" id="notepad-skills">
+            <div class="notepad-header">
+                <!-- Skills -->
+                <span>Skills</span>
+                <button onclick="closeNotepad('skills')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <div class="skills">
+                    <div> <!-- Technical skills -->
+                        <h2>Techical skills</h2><br /><br />
+                        <ul>
+                            <li>HTML</li><br />
+                            <li>Python</li><br />
+                            <li>SQL</li><br />
+                            <li>API</li><br />
+                            <li>GitHub</li><br />
+                            <li>Prompt designing</li><br />
+                            <li>Microsoft Office</li><br />
+                        </ul>
+                    </div>
+
+                    <div><!-- Soft skills -->
+                        <h2>Soft skills</h2><br /><br />
+                        <ul>
+                            <li>Teamwork</li><br />
+                            <li>Communication</li><br />
+                            <li>Problem Solving</li><br />
+                            <li>Presentation</li><br />
+                            <li>Time Management</li><br />
+                            <li>Adaptability</li><br />
+                            <li>Planning</li><br />
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="notepad" id="notepad-projects">
+            <div class="notepad-header">
+                <!-- Projects -->
+                <span>Projects</span>
+                <button onclick="closeNotepad('projects')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <div class="display-project">
+                    <div class="surround-project">
+                        <a href="https://osdevcommunity.vercel.app/" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/ef05849d-9539-4dbb-a235-2c208af8a022" alt="OS Community" width="50px" height="50px">
+                            <p>OS Community</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://saumilidutta.vercel.app/" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/c8816792-1797-4781-8c48-38daf0b07a9c" alt="portfolio" width="50px" height="50px">
+                            <p>Portfolio</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://aumiidutta.github.io/Linktree/" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/c436bdea-9e98-4be8-8a0c-653e74bb81ae" alt="Linktree" width="50px" height="50px">
+                            <p>Linktree</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://github.com/aumiidutta/CodexSearch" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/b06e7c5b-dede-48b5-8873-e2da927dd6f7" alt="Codex Search" width="50px" height="50px">
+                            <p>Codex Search</p>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="display-project">
+                    <div class="surround-project">
+                        <a href="https://github.com/aumiidutta/NovaBotics" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/4e5480dd-c05b-4d89-bcb3-79134e81654c" alt="NovaBotics" width="50px" height="50px">
+                            <p>NovaBotics</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://github.com/aumiidutta/streamX" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/acbcf54e-b896-44a1-82be-94dc1f888a8f" alt="streamX" width="50px" height="50px">
+                            <p>streamX</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://github.com/aumiidutta/AI-Text-Summarizer" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/6c4abcb0-55ed-413b-beb8-4cd118961a3e" alt="AI Text Summarizer" width="50px" height="50px">
+                            <p>AI Text Summarizer</p>
+                        </a>
+                    </div>
+
+                    <div class="surround-project">
+                        <a href="https://github.com/aumiidutta/Registration" target="_blank">
+                            <img src="https://github.com/user-attachments/assets/1e84c0c9-065c-4fa0-ba29-45eeb72dc5d7" alt="Registration" width="50px" height="50px">
+                            <p>Registration</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="notepad" id="notepad-communities">
+            <div class="notepad-header">
+                <!-- Communities -->
+                <span>Communities</span>
+                <button onclick="closeNotepad('communities')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <div>
+                    <h3>Leadership</h3>
+                    <a href="https://osdevcommunity.vercel.app/" target="_blank">OS Community</a>,
+                    Community for Developers<br />
+                    Kolkata Chapter Lead<br />
+                    Apr'23 - Present<br /><br /><br />
+                </div>
+
+                <div>
+                    <h3>Volunteering</h3>
+                    <a href="https://www.meetup.com/awsugkol/" target="_blank">AWS user Group Kolkata</a>,
+                    AWS local community<br />
+                    Volunteer<br />
+                    Mar'24 - Present<br /><br />
+                </div>
+            </div>
+        </div>        
+
+
+
+        <div class="notepad" id="notepad-contact">
+            <div class="notepad-header">
+                <!-- Contact -->
+                <span>Contact</span>
+                <button onclick="closeNotepad('contact')">&times;</button>
+            </div>
+
+
+            <div class="notepad-content">
+                <div class="info-contact"> <!-- LinkedIn -->
+                    <img src="https://github.com/user-attachments/assets/d393f5e9-8ba8-450e-9a07-f8bdbe07767e" alt="LinkedIn"  width="30px" height="30px">
+                    <a href="https://www.linkedin.com/in/saumilidutta" target="_blank">
+                        <span>https://www.linkedin.com/in/saumilidutta</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- X --> 
+                    <img src="https://github.com/user-attachments/assets/76338043-ef8b-4465-b463-427d9b85dda8" alt="X"  width="30px" height="30px">
+                    <a href="https://twitter.com/aumiidutta" target="_blank">
+                        <span>https://twitter.com/aumiidutta</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- YT -->
+                    <img src="https://github.com/user-attachments/assets/f6f3c618-b115-4b99-8af0-c2c5e8662204" alt="YT"  width="30px" height="30px">
+                    <a href="https://www.youtube.com/@saumilidutta" target="_blank">
+                        <span>https://www.youtube.com/@saumilidutta</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- github -->
+                    <img src="https://github.com/user-attachments/assets/94595f4f-f8fd-4680-9ff9-1789bf458457" alt="GitHub"  width="30px" height="30px">
+                    <a href="https://github.com/aumiidutta" target="_blank">
+                        <span>https://github.com/aumiidutta</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- hashnode -->
+                    <img src="https://github.com/user-attachments/assets/f6190271-3258-4531-8d54-e8b42fcfce7b" alt="Hashnode"  width="30px" height="30px">
+                    <a href="https://saumilidutta.hashnode.dev/" target="_blank">
+                        <span>https://saumilidutta.hashnode.dev/</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- old portfolio -->
+                    <img src="https://github.com/user-attachments/assets/c8816792-1797-4781-8c48-38daf0b07a9c" alt="old portfolio"  width="30px" height="30px">
+                    <a href="https://saumilidutta.vercel.app" target="_blank">
+                        <span>Old Portfolio</span>
+                    </a>
+                </div>
+                
+                <div class="info-contact"> <!-- linktree -->
+                    <img src="https://github.com/user-attachments/assets/7b7a699b-cb90-4ddd-aa79-9c21074b8a9b" alt="linktree"  width="30px" height="30px">
+                    <a href="https://aumiidutta.github.io/Linktree/" target="_blank">
+                        <span>Linktree</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- resume -->
+                    <img src="https://github.com/user-attachments/assets/c8816792-1797-4781-8c48-38daf0b07a9c" alt="resume"  width="30px" height="30px">
+                    <a href="https://github.com/user-attachments/files/17964598/Resume.pdf" target="_blank">
+                        <span>Resume</span>
+                    </a>
+                </div>
+
+                <div class="info-contact"> <!-- email -->
+                    <img src="https://github.com/user-attachments/assets/c6c40f2e-0950-4ef3-9744-d9050a454ab6" alt="email"  width="30px" height="30px">
+                    <a href="mailto:saumili.work@gmail.com" target="_blank">
+                        <span>Send me an email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    
+        <!-- Video Popup -->
+        <div class="video-popup" id="videoPopup">
+            <button class="close-btn" onclick="closeVideo()">✖</button>
+            <video id="popupVideo" controls>
+                <source src="https://github.com/user-attachments/assets/478c0702-c531-410d-b038-90623a558879" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+
+
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="taskbar-center">
+            <button class="start-btn">
+                <i class="fab fa-windows"></i>
+            </button>
+
+
+            <div class="search-container">
+                <input type="text" id="search-box" placeholder="Search">
+                <button id="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <div id="search-suggestions" class="search-suggestions"></div>
+            </div>
+
+
+            <div class="taskbar-apps">
+                <button><a href="https://www.google.co.in/" target="_blank"><i class="fab fa-chrome"></i></a></button>
+                <button><a href="https://vscode.dev/" target="_blank"><i class="fas fa-code"></i></a></button>
+                <button><a href="https://teams.live.com/v2/?utm_source=OfficeWeb" target="_blank"><i class="fas fa-video"></i></a></button>
+                <button><a href="https://web.whatsapp.com/" target="_blank"><i class="fab fa-whatsapp"></i></a></button>
+                <button><a href="Home" target="_blank"><i class="far fa-folder"></i></a></button>
+                <button><a href="https://www.accuweather.com/" target="_blank"><i class="fas fa-cloud" id="weather-icon"></i></a></button>
+            </div>
+        </div>
+
+
+        <div class="taskbar-right">
+            <p class="date" id="date"></p>
+            <p class="time" id="time"></p>
+        </div>        
+    </div>
+
+
+
+
+    <script>
+        // Update time in taskbar
+        function updateDateTime() {
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+            
+            // Update time
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            timeElement.textContent = `${hours}:${minutes}`;
+            
+            // Update date
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
+
+        // Notepad functionality
+        function openNotepad(id) {
+            const notepad = document.getElementById(`notepad-${id}`);
+            if (notepad) {
+                notepad.style.display = 'block';
+                // Center the notepad
+                notepad.style.position = 'fixed';
+                notepad.style.left = '50%';
+                notepad.style.top = '50%';
+                notepad.style.transform = 'translate(-50%, -50%)';
+            } else {
+                alert(`Notepad with ID "notepad-${id}" does not exist.`);
+            }
+        }
+
+        function closeNotepad(id) {
+            const notepad = document.getElementById(`notepad-${id}`);
+            if (notepad) {
+                notepad.style.display = 'none';
+            }
+        }
+
+
+        //Video Player
+        /* 1. Open video popup */
+        function openVideo() {
+            document.getElementById('videoPopup').style.display = 'flex';
+        }
+
+        /* 2. Close video popup */
+        function closeVideo() {
+            const videoPopup = document.getElementById('videoPopup');
+            const video = document.getElementById('popupVideo');
+            video.pause(); // Pause the video when closing
+            videoPopup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+  
   `, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8'
