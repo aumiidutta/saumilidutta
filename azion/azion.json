@@ -1,0 +1,42 @@
+{
+  "name": "saumilidutta-20241130070624",
+  "bucket": "",
+  "preset": "javascript",
+  "env": "production",
+  "prefix": "20241130070624",
+  "not-first-run": true,
+  "function": {
+    "id": 33037,
+    "name": "__DEFAULT__",
+    "file": ".edge/worker.js",
+    "args": "azion/args.json",
+    "instance-id": 31774,
+    "instance-name": "__DEFAULT__",
+    "cache-id": 191396
+  },
+  "application": {
+    "id": 1732951179,
+    "name": "__DEFAULT__"
+  },
+  "domain": {
+    "id": 1732956891,
+    "name": "saumilidutta-20241130070624",
+    "domain_name": "xqsx46q2ae.map.azionedge.net",
+    "url": "https://xqsx46q2ae.map.azionedge.net"
+  },
+  "rt-purge": {
+    "purge_on_publish": true
+  },
+  "origin": [],
+  "rules-engine": {
+    "created": false,
+    "rules": [
+      {
+        "id": 328875,
+        "name": "Execute Edge Function",
+        "phase": "request"
+      }
+    ]
+  },
+  "cache-settings": []
+}
